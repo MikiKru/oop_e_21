@@ -1,6 +1,9 @@
 package lecture2;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.OptionalInt;
+import java.util.stream.Collectors;
 
 public class NumericOperations {
     public static void main(String[] args) {
@@ -39,5 +42,22 @@ public class NumericOperations {
                 .distinct()         // Stream<Integer>
                 .count();
         System.out.println("How many unique elements? " + countUniques);
+        System.out.println("MAX: " + Arrays.stream(numbers).max().getAsInt());
+        System.out.println("MIN: " + Arrays.stream(numbers).min().getAsInt());
+        System.out.println("AVG: " + Arrays.stream(numbers).average().getAsDouble());
+        int searchValue = 99;
+        System.out.println("TRY TO FIND VALUE " + searchValue);
+        OptionalInt optionalInt = Arrays.stream(numbers).filter(number -> number == searchValue).findFirst();
+        if(optionalInt.isPresent()){        // if true means that value is found
+            System.out.println("FOUND: " + optionalInt.getAsInt());
+        } else {                            // else value is not found
+            System.out.println("There is no value "+ searchValue + " in our array");
+        }
+        System.out.println("CONVERSION");
+        List<Integer> numbersInList = Arrays.stream(numbers)    // Stream<int>
+                .boxed()                                        // Stream<Integer>
+                .collect(Collectors.toList());                  // List<Integer>
+        System.out.println(numbersInList);
+
     }
 }
