@@ -1,9 +1,13 @@
 package lecture3;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
     private static List<Task> tasks = new ArrayList<>(
@@ -16,7 +20,29 @@ public class Main {
             )
     );
 
-    public static void main(String[] args) {
-        System.out.println();
+    public static void main(String[] args) throws FileNotFoundException {
+        System.out.println("TASKS - elements");
+        tasks.stream().forEach(task -> System.out.println(task));
+        System.out.println("IN PROGRESS TASKS");
+        tasks.stream()
+                .filter(task -> task.getCategory() == Category.DONE)
+                .forEach(task -> System.out.println(task));
+        System.out.println("AGGREGATING TASKS BY CATEGORY");
+        // in progress - 2
+        // created - 2
+        // done - 1
+        System.out.println(tasks.stream().collect(Collectors.groupingBy(Task::getCategory)));
+        System.out.println("TASK TO STRING");
+        String resultToFile = String.format(String.format("| %20s | %12s | %12s | %12s |\n",
+                "TITLE", "START", "STOP", "CATEGORY"))+
+                tasks.stream()
+                .map(task -> String.valueOf(task.toString()))
+                .collect(Collectors.joining("\n"));
+        System.out.println(resultToFile);
+        File file = new File("task.txt");
+        PrintWriter printWriter = new PrintWriter(file);
+        printWriter.println(resultToFile);
+        printWriter.close();
+
     }
 }
