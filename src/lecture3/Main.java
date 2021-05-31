@@ -33,8 +33,8 @@ public class Main {
         // done - 1
         System.out.println(tasks.stream().collect(Collectors.groupingBy(Task::getCategory)));
         System.out.println("TASK TO STRING");
-        String resultToFile = String.format(String.format("| %20s | %12s | %12s | %12s |\n",
-                "TITLE", "START", "STOP", "CATEGORY"))+
+        String resultToFile = String.format("| %20s | %12s | %12s | %12s |\n",
+                "TITLE", "START", "STOP", "CATEGORY")+
                 tasks.stream()
                 .map(task -> String.valueOf(task.toString()))
                 .collect(Collectors.joining("\n"));
